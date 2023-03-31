@@ -9,6 +9,7 @@ import SearchScreen from "./screens/SearchScreen"
 import FavoritesScreen from "./screens/FavoritesScreen"
 import WatchlistScreen from "./screens/WatchlistScreen"
 import { Colors } from "./constants/colors"
+import Search from "./components/Search"
 
 export default function App() {
     const Tab = createBottomTabNavigator()
@@ -24,21 +25,23 @@ export default function App() {
                     tabBarActiveTintColor: Colors.primary500,
                     tabBarActiveBackgroundColor: Colors.gray200,
                     tabBarInactiveBackgroundColor: Colors.gray300,
-                    tabBarInactiveTintColor: "white",
-                    tabBarStyle: { height: 60, borderTopWidth: 0 }
+                    tabBarInactiveTintColor: Colors.gray900,
+                    tabBarStyle: { height: 60, borderTopWidth: 0 },
+                    tabBarHideOnKeyboard: true
                 }}
                 sceneContainerStyle={{ backgroundColor: Colors.gray100 }}
             >
                 <Tab.Screen
                     name="Search"
                     component={SearchScreen}
-                    options={{ tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} /> }}
+                    options={{
+                        tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />
+                    }}
                 />
                 <Tab.Screen
                     name="Favorites"
                     component={FavoritesScreen}
                     options={{
-                        title: "Favorite Movies",
                         tabBarIcon: ({ color, size }) => <Ionicons name="heart" color={color} size={size} />
                     }}
                 />
