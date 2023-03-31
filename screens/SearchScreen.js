@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { Text } from "react-native"
-import Search from "../components/Search"
+import { Text, View } from "react-native"
+import SearchBar from "../components/UI/SearchBar"
 import IconButton from "../components/UI/IconButton"
+import MovieList from "../components/MovieList"
 
 function SearchScreen({ navigation }) {
     const [searchInputShown, setSearchInputShown] = useState(false)
@@ -17,22 +18,21 @@ function SearchScreen({ navigation }) {
         console.log(searchText)
     }, [searchText])
 
-    if (searchInputShown) {
-        return (
-            <Search
-                onBlur={() => setSearchInputShown(false)}
-                onChangeText={text => {
-                    setSearchText(text)
-                }}
-                value={searchText}
-            />
-        )
-    }
+    const searchBar = (
+        <SearchBar
+            onBlur={() => setSearchInputShown(false)}
+            onChangeText={text => {
+                setSearchText(text)
+            }}
+            value={searchText}
+        />
+    )
 
     return (
-        <>
-            <Text>Search</Text>
-        </>
+        <View>
+            {searchInputShown && searchBar}
+            <MovieList />
+        </View>
     )
 }
 
