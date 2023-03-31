@@ -9,7 +9,7 @@ import SearchScreen from "./screens/SearchScreen"
 import FavoritesScreen from "./screens/FavoritesScreen"
 import WatchlistScreen from "./screens/WatchlistScreen"
 import { Colors } from "./constants/colors"
-import Search from "./components/Search"
+import Search from "./components/UI/SearchBar"
 
 export default function App() {
     const Tab = createBottomTabNavigator()

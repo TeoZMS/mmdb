@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View } from "react-native"
-import { Colors } from "../constants/colors"
+import { Colors } from "../../constants/colors"
 
-function Search({ onBlur, onChangeText, value }) {
+function SearchBar({ onBlur, onChangeText, value }) {
     return (
         <View style={styles.container}>
             <TextInput style={styles.textInput} onBlur={onBlur} autoFocus={true} onChangeText={onChangeText} value={value} />
@@ -9,7 +9,7 @@ function Search({ onBlur, onChangeText, value }) {
     )
 }
 
-export default Search
+export default SearchBar
 
 const styles = StyleSheet.create({
     container: {
