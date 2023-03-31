@@ -20,7 +20,7 @@ export default function App() {
                 screenOptions={{
                     tabBarLabelStyle: { fontSize: 16 },
                     headerTintColor: Colors.primary500,
-                    headerStyle: { backgroundColor: Colors.gray200 },
+                    headerStyle: { backgroundColor: Colors.gray200, elevation: 0, shadowOpacity: 0 },
                     tabBarActiveTintColor: Colors.primary500,
                     tabBarActiveBackgroundColor: Colors.gray200,
                     tabBarInactiveBackgroundColor: Colors.gray300,
