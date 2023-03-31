@@ -1,0 +1,4 @@
+export const OMDB_KEY = "YOUR KEY"
+export const IMDB_KEY = "YOUR KEY"
+
+// rename file to apikeys.js
