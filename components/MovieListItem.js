@@ -14,7 +14,7 @@ function MovieListItem({ movie }) {
             <View style={styles.detailsContainer}>
                 <Text style={styles.title}>{movie.Title}</Text>
                 <Text style={styles.year}>{movie.Year}</Text>
-                <Text style={styles.type}>Type: Movie</Text>
+                <Text style={styles.type}>Type: {movie.Type.charAt(0).toUpperCase() + movie.Type.slice(1)}</Text>
             </View>
         </View>
     )
