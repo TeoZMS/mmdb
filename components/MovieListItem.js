@@ -1,9 +1,17 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, Pressable, StyleSheet, Text, View } from "react-native"
 import { Colors } from "../constants/colors"
+import { useNavigation } from "@react-navigation/native"
 
 function MovieListItem({ movie }) {
+    const navigation = useNavigation()
+
     return (
-        <View style={styles.container}>
+        <Pressable
+            style={styles.container}
+            onPress={() => {
+                navigation.navigate("Movie", { id: movie.imdbID })
+            }}
+        >
             <Image
                 alt="Poster"
                 style={styles.image}
@@ -16,7 +24,7 @@ function MovieListItem({ movie }) {
                 <Text style={styles.year}>{movie.Year}</Text>
                 <Text style={styles.type}>Type: {movie.Type.charAt(0).toUpperCase() + movie.Type.slice(1)}</Text>
             </View>
-        </View>
+        </Pressable>
     )
 }
 

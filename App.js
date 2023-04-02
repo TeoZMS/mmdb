@@ -10,6 +10,7 @@ import FavoritesScreen from "./screens/FavoritesScreen"
 import WatchlistScreen from "./screens/WatchlistScreen"
 import { Colors } from "./constants/colors"
 import Search from "./components/UI/SearchBar"
+import MovieScreen from "./screens/MovieScreen"
 
 export default function App() {
     const Tab = createBottomTabNavigator()
@@ -58,8 +59,9 @@ export default function App() {
         <>
             <StatusBar style="light" />
             <NavigationContainer>
-                <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: Colors.accent500 } }}>
+                <Stack.Navigator>
                     <Stack.Screen name="Home" component={Tabs} options={{ headerShown: false }} />
+                    <Stack.Screen name="Movie" component={MovieScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
