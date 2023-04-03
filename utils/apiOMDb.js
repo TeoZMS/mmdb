@@ -10,5 +10,6 @@ export async function search(text) {
 
 export async function getDetails(id) {
     const result = await axios.get(`${baseUrl}i=${id}`)
-    return result.data
+
+    return { ...result.data, Poster: result.data.Poster.replace("SX300", "SX800") }
 }
