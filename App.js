@@ -61,7 +61,15 @@ export default function App() {
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name="Home" component={Tabs} options={{ headerShown: false }} />
-                    <Stack.Screen name="Movie" component={MovieScreen} />
+                    <Stack.Screen
+                        name="Movie"
+                        component={MovieScreen}
+                        options={{
+                            headerTintColor: Colors.primary500,
+                            headerStyle: { backgroundColor: Colors.gray200 },
+                            contentStyle: { backgroundColor: Colors.gray100 }
+                        }}
+                    />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
