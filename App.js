@@ -24,13 +24,12 @@ export default function App() {
                     headerTintColor: Colors.primary500,
                     headerStyle: { backgroundColor: Colors.gray200, elevation: 0, shadowOpacity: 0 },
                     tabBarActiveTintColor: Colors.primary500,
-                    tabBarActiveBackgroundColor: Colors.gray200,
-                    tabBarInactiveBackgroundColor: Colors.gray300,
                     tabBarInactiveTintColor: Colors.gray900,
-                    tabBarStyle: { height: 60, borderTopWidth: 0 },
+                    tabBarStyle: { borderTopWidth: 0, backgroundColor: Colors.gray200, height: 40 },
+                    tabBarShowLabel: false,
                     tabBarHideOnKeyboard: true
                 }}
-                sceneContainerStyle={{ backgroundColor: Colors.gray100 }}
+                sceneContainerStyle={{ backgroundColor: "black" }}
             >
                 <Tab.Screen
                     name="Search"
@@ -67,7 +66,7 @@ export default function App() {
                         options={{
                             headerTintColor: Colors.primary500,
                             headerStyle: { backgroundColor: Colors.gray200 },
-                            contentStyle: { backgroundColor: Colors.gray100 }
+                            contentStyle: { backgroundColor: "black" }
                         }}
                     />
                 </Stack.Navigator>

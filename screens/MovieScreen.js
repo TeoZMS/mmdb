@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
         color: Colors.gray900
     },
     genreContainer: {
+        flexWrap: "wrap",
         marginHorizontal: 20,
         marginVertical: 15,
         flexDirection: "row",
@@ -113,7 +114,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         borderColor: Colors.accent500,
         borderWidth: 1,
-        padding: 8
+        padding: 8,
+        margin: 4
     },
     plot: {
         fontSize: 18,

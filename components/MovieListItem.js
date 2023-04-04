@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginHorizontal: 4,
         marginVertical: 2,
-        backgroundColor: "black",
-        borderRadius: 8,
         overflow: "hidden"
     },
     image: {
