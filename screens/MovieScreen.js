@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
+import IconButton from "../components/UI/IconButton"
+import { insertToFavorites } from "../utils/database"
 
 const posterAR = 1.48
 const screenWidth = Dimensions.get("screen").width
@@ -9,6 +11,13 @@ const screenWidth = Dimensions.get("screen").width
 function MovieScreen({ route, navigation }) {
     const [movie, setMovie] = useState()
     const { id } = route.params
+
+    const genres = []
+    if (movie) {
+        for (let g of movie.Genre.split(", ")) {
+            genres.push(g)
+        }
+    }
 
     useEffect(() => {
         async function getMovie(id) {
@@ -21,7 +30,17 @@ function MovieScreen({ route, navigation }) {
 
     useEffect(() => {
         if (movie) {
-            navigation.setOptions({ title: movie.Title })
+            navigation.setOptions({
+                title: movie.Title,
+                headerRight: () => (
+                    <IconButton
+                        icon="heart"
+                        onPress={() => {
+                            insertToFavorites(movie)
+                        }}
+                    />
+                )
+            })
         }
     }, [movie])
 
@@ -46,7 +65,7 @@ function MovieScreen({ route, navigation }) {
                     <Text style={styles.detailsText}>{movie.Runtime}</Text>
                 </View>
                 <View style={styles.genreContainer}>
-                    {movie.Genre.map(item => (
+                    {genres.map(item => (
                         <Text style={styles.genreText} key={item}>
                             {item}
                         </Text>
@@ -106,7 +125,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginVertical: 15,
         flexDirection: "row",
-        justifyContent: "space-around"
+        justifyContent: "center"
     },
     genreText: {
         fontSize: 16,
@@ -115,7 +134,8 @@ const styles = StyleSheet.create({
         borderColor: Colors.accent500,
         borderWidth: 1,
         padding: 8,
-        margin: 4
+        marginVertical: 4,
+        marginHorizontal: 12
     },
     plot: {
         fontSize: 18,

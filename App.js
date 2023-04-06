@@ -11,10 +11,17 @@ import WatchlistScreen from "./screens/WatchlistScreen"
 import { Colors } from "./constants/colors"
 import Search from "./components/UI/SearchBar"
 import MovieScreen from "./screens/MovieScreen"
+import IconButton from "./components/UI/IconButton"
+import { useEffect } from "react"
+import { init } from "./utils/database"
 
 export default function App() {
     const Tab = createBottomTabNavigator()
     const Stack = createNativeStackNavigator()
+
+    useEffect(() => {
+        init()
+    }, [])
 
     function Tabs() {
         return (
@@ -26,8 +33,7 @@ export default function App() {
                     tabBarActiveTintColor: Colors.primary500,
                     tabBarInactiveTintColor: Colors.gray900,
                     tabBarStyle: { borderTopWidth: 0, backgroundColor: Colors.gray200, height: 40 },
-                    tabBarShowLabel: false,
-                    tabBarHideOnKeyboard: true
+                    tabBarShowLabel: false
                 }}
                 sceneContainerStyle={{ backgroundColor: "black" }}
             >
