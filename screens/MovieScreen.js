@@ -3,13 +3,14 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-nat
 import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
 import IconButton from "../components/UI/IconButton"
-import { insertToFavorites } from "../utils/database"
+import { getFavoriteById, insertToFavorites } from "../utils/database"
 
 const posterAR = 1.48
 const screenWidth = Dimensions.get("screen").width
 
 function MovieScreen({ route, navigation }) {
     const [movie, setMovie] = useState()
+    const [isFavorite, setIsFavorite] = useState(false)
     const { id } = route.params
 
     const genres = []
@@ -21,12 +22,18 @@ function MovieScreen({ route, navigation }) {
 
     useEffect(() => {
         async function getMovie(id) {
-            const result = await omdb.getDetails(id)
-            setMovie(result)
+            const dbResult = await getFavoriteById(id)
+            if (dbResult) {
+                setMovie(dbResult)
+                setIsFavorite(true)
+            } else {
+                const omdbResult = await omdb.getDetails(id)
+                setMovie(omdbResult)
+            }
         }
 
         getMovie(id)
-    }, [id, setMovie])
+    }, [id, setMovie, setIsFavorite])
 
     useEffect(() => {
         if (movie) {
@@ -36,13 +43,20 @@ function MovieScreen({ route, navigation }) {
                     <IconButton
                         icon="heart"
                         onPress={() => {
-                            insertToFavorites(movie)
+                            if (isFavorite) {
+                                console.log("remove")
+                                // setIsFavorite(false)
+                            } else {
+                                insertToFavorites(movie)
+                                setIsFavorite(true)
+                            }
                         }}
+                        color={isFavorite && "red"}
                     />
                 )
             })
         }
-    }, [movie])
+    }, [movie, isFavorite, setIsFavorite])
 
     if (!movie) {
         return (
