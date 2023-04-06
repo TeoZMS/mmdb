@@ -1,12 +1,9 @@
-import { useEffect, useLayoutEffect, useState } from "react"
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { useEffect, useState } from "react"
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
 import IconButton from "../components/UI/IconButton"
 import { getFavoriteById, insertToFavorites, removeFavoriteById } from "../utils/database"
-
-const posterAR = 1.48
-const screenWidth = Dimensions.get("screen").width
 
 function MovieScreen({ route, navigation }) {
     const [movie, setMovie] = useState()
