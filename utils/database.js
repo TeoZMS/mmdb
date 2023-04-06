@@ -60,7 +60,6 @@ export function insertToFavorites(movie) {
                     movie.Metascore
                 ],
                 (_, result) => {
-                    console.log(result)
                     resolve(result)
                 },
                 (_, error) => {
@@ -71,4 +70,21 @@ export function insertToFavorites(movie) {
     })
 
     return promise
+}
+
+export function getFevorites() {
+    return new Promise((resolve, reject) => {
+        database.transaction(tx => {
+            tx.executeSql(
+                "Select imdbID, Poster, Title, Year, Type FROM favorites ORDER BY Title",
+                [],
+                (_, result) => {
+                    resolve(result.rows._array)
+                },
+                (_, error) => {
+                    reject(error)
+                }
+            )
+        })
+    })
 }
