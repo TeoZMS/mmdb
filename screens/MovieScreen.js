@@ -3,7 +3,7 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-nat
 import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
 import IconButton from "../components/UI/IconButton"
-import { getFavoriteById, insertToFavorites } from "../utils/database"
+import { getFavoriteById, insertToFavorites, removeFavoriteById } from "../utils/database"
 
 const posterAR = 1.48
 const screenWidth = Dimensions.get("screen").width
@@ -38,16 +38,23 @@ function MovieScreen({ route, navigation }) {
     useEffect(() => {
         if (movie) {
             navigation.setOptions({
-                title: movie.Title,
+                title: movie.Title
+            })
+        }
+    }, [movie])
+
+    useEffect(() => {
+        if (movie) {
+            navigation.setOptions({
                 headerRight: () => (
                     <IconButton
                         icon="heart"
-                        onPress={() => {
+                        onPress={async () => {
                             if (isFavorite) {
-                                console.log("remove")
-                                // setIsFavorite(false)
+                                await removeFavoriteById(movie.imdbID)
+                                setIsFavorite(false)
                             } else {
-                                insertToFavorites(movie)
+                                await insertToFavorites(movie)
                                 setIsFavorite(true)
                             }
                         }}

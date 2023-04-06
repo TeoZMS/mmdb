@@ -93,10 +93,27 @@ export function getFavoriteById(id) {
     return new Promise((resolve, reject) => {
         database.transaction(tx => {
             tx.executeSql(
-                "Select * FROM favorites WHERE imdbID = ?",
+                "SELECT * FROM favorites WHERE imdbID = ?",
                 [id],
                 (_, result) => {
                     resolve(result.rows._array[0])
+                },
+                (_, error) => {
+                    reject(error)
+                }
+            )
+        })
+    })
+}
+
+export function removeFavoriteById(id) {
+    return new Promise((resolve, reject) => {
+        database.transaction(tx => {
+            tx.executeSql(
+                "DELETE FROM favorites WHERE imdbID = ?",
+                [id],
+                (_, result) => {
+                    resolve(result)
                 },
                 (_, error) => {
                     reject(error)
