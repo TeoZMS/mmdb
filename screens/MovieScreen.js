@@ -64,7 +64,7 @@ function MovieScreen({ route, navigation }) {
 
     if (!movie) {
         return (
-            <View style={styles.container}>
+            <View style={styles.loadingContainer}>
                 <ActivityIndicator size="large" color={Colors.primary500} />
             </View>
         )
@@ -108,9 +108,12 @@ export default MovieScreen
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    loadingContainer: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignContent: "center"
     },
     image: {
         position: "absolute",
