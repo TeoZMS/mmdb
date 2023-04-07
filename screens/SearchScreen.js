@@ -40,7 +40,9 @@ function SearchScreen({ navigation }) {
     useEffect(() => {
         async function searchMovies(text) {
             const result = await omdb.search(text)
-            setSearchedMovies(result)
+            if (result) {
+                setSearchedMovies(result)
+            }
         }
 
         if (searchText) {
