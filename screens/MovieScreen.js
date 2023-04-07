@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        opacity: 0.1
+        opacity: 0.2
     },
     title: {
         fontSize: 24,
