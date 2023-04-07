@@ -72,7 +72,8 @@ export default function App() {
                         options={{
                             headerTintColor: Colors.primary500,
                             headerStyle: { backgroundColor: Colors.gray200 },
-                            contentStyle: { backgroundColor: "black" }
+                            contentStyle: { backgroundColor: "black" },
+                            title: ""
                         }}
                     />
                 </Stack.Navigator>

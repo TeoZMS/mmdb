@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
 import IconButton from "../components/UI/IconButton"
@@ -64,8 +64,8 @@ function MovieScreen({ route, navigation }) {
 
     if (!movie) {
         return (
-            <View>
-                <Text>Loading</Text>
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color={Colors.primary500} />
             </View>
         )
     }
@@ -108,7 +108,9 @@ export default MovieScreen
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
     },
     image: {
         position: "absolute",
