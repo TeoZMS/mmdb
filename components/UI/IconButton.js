@@ -4,7 +4,7 @@ import { Colors } from "../../constants/colors"
 
 function IconButton({ icon, onPress, color }) {
     return (
-        <Pressable onPress={onPress} style={styles.container}>
+        <Pressable onPress={onPress} style={({ pressed }) => [styles.container, pressed && styles.pressed]}>
             <Ionicons name={icon} size={24} color={color ? color : Colors.gray900} />
         </Pressable>
     )
@@ -18,5 +18,8 @@ const styles = StyleSheet.create({
         margin: 6,
         justifyContent: "center",
         alignItems: "center"
+    },
+    pressed: {
+        opacity: 0.7
     }
 })

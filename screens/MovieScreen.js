@@ -4,6 +4,7 @@ import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
 import IconButton from "../components/UI/IconButton"
 import { getFavoriteById, insertToFavorites, removeFavoriteById } from "../utils/database"
+import MyButton from "../components/UI/MyButton"
 
 function MovieScreen({ route, navigation }) {
     const [movie, setMovie] = useState()
@@ -99,6 +100,9 @@ function MovieScreen({ route, navigation }) {
                 <Text style={styles.namesOuter}>
                     Stars: <Text style={styles.namesInner}>{movie.Actors}</Text>
                 </Text>
+                <View>
+                    <MyButton>Add to Watchlist</MyButton>
+                </View>
             </ScrollView>
         </View>
     )
