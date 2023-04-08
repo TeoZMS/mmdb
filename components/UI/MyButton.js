@@ -3,18 +3,18 @@ import { Colors } from "../../constants/colors"
 
 function MyButton({ onPress, children }) {
     return (
-        <Pressable style={({ pressed }) => [styles.pressable, pressed && styles.pressed]} onPress={onPress}>
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <Pressable style={({ pressed }) => [styles.pressable, pressed && styles.pressed]} onPress={onPress}>
                 <Text style={styles.text}>{children}</Text>
-            </View>
-        </Pressable>
+            </Pressable>
+        </View>
     )
 }
 
 export default MyButton
 
 const styles = StyleSheet.create({
-    pressable: {
+    container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     pressed: {
         opacity: 0.7
     },
-    container: {
+    pressable: {
         padding: 10,
         borderWidth: 2,
         borderColor: Colors.primary500

@@ -120,7 +120,17 @@ function MovieScreen({ route, navigation }) {
                 <Text style={styles.namesOuter}>
                     Stars: <Text style={styles.namesInner}>{movie.Actors}</Text>
                 </Text>
-                <View>
+                <View style={styles.ratingOuterContainer}>
+                    <View style={styles.ratingInnerContainer}>
+                        <Text style={styles.ratingText}>IMDB RATING</Text>
+                        <Text style={styles.ratingText}>{movie.imdbRating}/10</Text>
+                    </View>
+                    <View style={styles.ratingInnerContainer}>
+                        <Text style={styles.ratingText}>Metascore</Text>
+                        <Text style={styles.ratingText}>{movie.Metascore}/100</Text>
+                    </View>
+                </View>
+                <View style={styles.buttonContainer}>
                     <MyButton
                         onPress={async () => {
                             if (isInWatchlist) {
@@ -214,5 +224,28 @@ const styles = StyleSheet.create({
     namesInner: {
         fontSize: 18,
         color: Colors.accent500
+    },
+    ratingOuterContainer: {
+        flex: 1,
+        flexDirection: "row",
+        marginHorizontal: 20,
+        paddingVertical: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.primary500
+    },
+    ratingInnerContainer: {
+        borderWidth: 1,
+        borderColor: Colors.gray900,
+        flex: 1,
+        marginHorizontal: 20,
+        paddingVertical: 10
+    },
+    ratingText: {
+        color: Colors.gray900,
+        fontSize: 18,
+        textAlign: "center"
+    },
+    buttonContainer: {
+        marginTop: 20
     }
 })
