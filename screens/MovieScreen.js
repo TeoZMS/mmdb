@@ -3,12 +3,20 @@ import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from "re
 import * as omdb from "../utils/apiOMDb"
 import { Colors } from "../constants/colors"
 import IconButton from "../components/UI/IconButton"
-import { getFavoriteById, insertToFavorites, removeFavoriteById } from "../utils/database"
+import {
+    getFavoriteById,
+    getWatchlistedById,
+    insertToFavorites,
+    insertToWatchlist,
+    removeFavoriteById,
+    removeWatchlistedById
+} from "../utils/database"
 import MyButton from "../components/UI/MyButton"
 
 function MovieScreen({ route, navigation }) {
     const [movie, setMovie] = useState()
     const [isFavorite, setIsFavorite] = useState(false)
+    const [isInWatchlist, setIsInWatchlist] = useState(false)
     const { id } = route.params
 
     const genres = []
@@ -20,18 +28,30 @@ function MovieScreen({ route, navigation }) {
 
     useEffect(() => {
         async function getMovie(id) {
-            const dbResult = await getFavoriteById(id)
-            if (dbResult) {
-                setMovie(dbResult)
+            const favDbResult = await getFavoriteById(id)
+            if (favDbResult) {
+                setMovie(favDbResult)
                 setIsFavorite(true)
-            } else {
+            }
+
+            const watchDbResult = await getWatchlistedById(id)
+            if (watchDbResult) {
+                if (!movie) {
+                    setMovie(watchDbResult)
+                }
+                setIsInWatchlist(true)
+            }
+
+            if (!favDbResult && !watchDbResult) {
                 const omdbResult = await omdb.getDetails(id)
                 setMovie(omdbResult)
             }
         }
 
-        getMovie(id)
-    }, [id, setMovie, setIsFavorite])
+        if (!movie) {
+            getMovie(id)
+        }
+    }, [id, setMovie, setIsFavorite, setIsInWatchlist, movie])
 
     useEffect(() => {
         if (movie) {
@@ -101,7 +121,19 @@ function MovieScreen({ route, navigation }) {
                     Stars: <Text style={styles.namesInner}>{movie.Actors}</Text>
                 </Text>
                 <View>
-                    <MyButton>Add to Watchlist</MyButton>
+                    <MyButton
+                        onPress={async () => {
+                            if (isInWatchlist) {
+                                await removeWatchlistedById(movie.imdbID)
+                                setIsInWatchlist(false)
+                            } else {
+                                await insertToWatchlist(movie)
+                                setIsInWatchlist(true)
+                            }
+                        }}
+                    >
+                        {isInWatchlist ? "Remove from Watchlist " : "Add to Watchlist"}
+                    </MyButton>
                 </View>
             </ScrollView>
         </View>
