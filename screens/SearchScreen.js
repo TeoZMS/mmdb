@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Animated, StyleSheet, Text, View } from "react-native"
+import { Animated, Keyboard, StyleSheet, Text, View } from "react-native"
 import SearchBar from "../components/UI/SearchBar"
 import IconButton from "../components/UI/IconButton"
 import MovieList from "../components/MovieList"
@@ -13,6 +13,15 @@ function SearchScreen({ navigation }) {
     const searchAnim = useRef(new Animated.Value(-50)).current
 
     const searchBar = useRef()
+
+    useEffect(() => {
+        const keyboardDidHideEvent = Keyboard.addListener("keyboardDidHide", () => {
+            searchBar.current.blur()
+        })
+        return () => {
+            keyboardDidHideEvent?.remove()
+        }
+    }, [searchBar])
 
     useEffect(() => {
         if (searchInputShown) {
