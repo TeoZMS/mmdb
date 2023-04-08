@@ -24,8 +24,31 @@ export function init() {
                 )`,
                 [],
                 () => {
-                    console.log("init completed")
-                    resolve()
+                    tx.executeSql(
+                        `CREATE TABLE IF NOT EXISTS watchlist (
+                            imdbID TEXT PRIMARY KEY NOT NULL,
+                            Poster TEXT NOT NULL,
+                            Title TEXT NOT NULL,
+                            Year TEXT NOT NULL,
+                            Rated TEXT NOT NULL,
+                            Runtime TEXT NOT NULL,
+                            Genre TEXT NOT NULL,
+                            Plot TEXT NOT NULL,
+                            Director TEXT NOT NULL,
+                            Writer TEXT NOT NULL,
+                            Actors TEXT NOT NULL,
+                            Type TEXT NOT NULL,
+                            imdbRating TEXT NOT NULL,
+                            Metascore TEXT NOT NULL 
+                        )`,
+                        [],
+                        () => {
+                            resolve()
+                        },
+                        (_, error) => {
+                            reject(error)
+                        }
+                    )
                 },
                 (_, error) => {
                     reject(error)
@@ -37,11 +60,11 @@ export function init() {
     return promise
 }
 
-export function insertToFavorites(movie) {
-    const promise = new Promise((resolve, reject) => {
+function insert(movie, table) {
+    return new Promise((resolve, reject) => {
         database.transaction(tx => {
             tx.executeSql(
-                `INSERT INTO favorites (imdbID, Poster, Title, Year, Rated, Runtime, Genre, Plot, Director, Writer, Actors, Type, imdbRating, Metascore)
+                `INSERT INTO ${table} (imdbID, Poster, Title, Year, Rated, Runtime, Genre, Plot, Director, Writer, Actors, Type, imdbRating, Metascore)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     movie.imdbID,
@@ -68,15 +91,21 @@ export function insertToFavorites(movie) {
             )
         })
     })
-
-    return promise
 }
 
-export function getFevorites() {
+export function insertToFavorites(movie) {
+    return insert(movie, "favorites")
+}
+
+export function insertToWatchlist(movie) {
+    return insert(movie, "watchlist")
+}
+
+function get(table) {
     return new Promise((resolve, reject) => {
         database.transaction(tx => {
             tx.executeSql(
-                "Select imdbID, Poster, Title, Year, Type FROM favorites ORDER BY Title",
+                `Select imdbID, Poster, Title, Year, Type FROM ${table} ORDER BY Title`,
                 [],
                 (_, result) => {
                     resolve(result.rows._array)
@@ -89,11 +118,19 @@ export function getFevorites() {
     })
 }
 
-export function getFavoriteById(id) {
+export function getFavorites() {
+    return get("favorites")
+}
+
+export function getWatchlist() {
+    return get("watchlist")
+}
+
+function getById(id, table) {
     return new Promise((resolve, reject) => {
         database.transaction(tx => {
             tx.executeSql(
-                "SELECT * FROM favorites WHERE imdbID = ?",
+                `SELECT * FROM ${table} WHERE imdbID = ?`,
                 [id],
                 (_, result) => {
                     resolve(result.rows._array[0])
@@ -106,11 +143,19 @@ export function getFavoriteById(id) {
     })
 }
 
-export function removeFavoriteById(id) {
+export function getFavoriteById(id) {
+    return getById(id, "favorites")
+}
+
+export function getWatchlistedById(id) {
+    return getById(id, "watchlist")
+}
+
+function removeById(id, table) {
     return new Promise((resolve, reject) => {
         database.transaction(tx => {
             tx.executeSql(
-                "DELETE FROM favorites WHERE imdbID = ?",
+                `DELETE FROM ${table} WHERE imdbID = ?`,
                 [id],
                 (_, result) => {
                     resolve(result)
@@ -121,4 +166,12 @@ export function removeFavoriteById(id) {
             )
         })
     })
+}
+
+export function removeFavoriteById(id) {
+    return removeById(id, "favorites")
+}
+
+export function removeWatchlistedById(id) {
+    return removeById(id, "watchlist")
 }

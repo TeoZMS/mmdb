@@ -1,8 +1,8 @@
 import { useIsFocused } from "@react-navigation/native"
 import { useEffect, useState } from "react"
 import { Text, View } from "react-native"
-import { getFevorites } from "../utils/database"
 import MovieList from "../components/MovieList"
+import { getFavorites } from "../utils/database"
 
 function FavoritesScreen() {
     const [favoriteMovies, setFavoriteMovies] = useState()
@@ -11,7 +11,7 @@ function FavoritesScreen() {
     useEffect(() => {
         if (isFocused) {
             async function favorites() {
-                const movies = await getFevorites()
+                const movies = await getFavorites()
                 setFavoriteMovies(movies)
             }
             favorites()
