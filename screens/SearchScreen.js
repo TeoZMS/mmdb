@@ -4,11 +4,13 @@ import SearchBar from "../components/UI/SearchBar"
 import IconButton from "../components/UI/IconButton"
 import MovieList from "../components/MovieList"
 import * as omdb from "../utils/apiOMDb"
+import EmptyMovieList from "../components/EmptyMovieList"
 
 function SearchScreen({ navigation }) {
     const [searchInputShown, setSearchInputShown] = useState(false)
     const [searchText, setSearchText] = useState("")
     const [searchedMovies, setSearchedMovies] = useState()
+    const [searching, setSearching] = useState(false)
 
     const searchAnim = useRef(new Animated.Value(-50)).current
 
@@ -51,10 +53,12 @@ function SearchScreen({ navigation }) {
             const result = await omdb.search(text)
             if (result) {
                 setSearchedMovies(result)
+                setSearching(false)
             }
         }
 
         if (searchText) {
+            setSearching(true)
             const timer = setTimeout(() => {
                 searchMovies(searchText)
             }, 500)
@@ -64,6 +68,8 @@ function SearchScreen({ navigation }) {
             }
         }
     }, [searchText, setSearchedMovies])
+
+    const movieList = searching ? <EmptyMovieList /> : <MovieList movies={searchedMovies} />
 
     return (
         <View>
@@ -77,7 +83,7 @@ function SearchScreen({ navigation }) {
                     inputRef={searchBar}
                 />
             </Animated.View>
-            <MovieList movies={searchedMovies} />
+            {movieList}
         </View>
     )
 }
