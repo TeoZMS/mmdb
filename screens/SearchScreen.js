@@ -5,6 +5,7 @@ import IconButton from "../components/UI/IconButton"
 import MovieList from "../components/MovieList"
 import * as omdb from "../utils/apiOMDb"
 import EmptyMovieList from "../components/EmptyMovieList"
+import { Colors } from "../constants/colors"
 
 function SearchScreen({ navigation }) {
     const [searchInputShown, setSearchInputShown] = useState(false)
@@ -51,10 +52,8 @@ function SearchScreen({ navigation }) {
     useEffect(() => {
         async function searchMovies(text) {
             const result = await omdb.search(text)
-            if (result) {
-                setSearchedMovies(result)
-                setSearching(false)
-            }
+            setSearchedMovies(result)
+            setSearching(false)
         }
 
         if (searchText) {
@@ -66,13 +65,28 @@ function SearchScreen({ navigation }) {
             return () => {
                 clearTimeout(timer)
             }
+        } else {
+            setSearching(false)
         }
     }, [searchText, setSearchedMovies])
 
-    const movieList = searching ? <EmptyMovieList /> : <MovieList movies={searchedMovies} />
+    function Message(text) {
+        return (
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>{text}</Text>
+            </View>
+        )
+    }
+    const mainView = searching ? (
+        <EmptyMovieList />
+    ) : searchedMovies ? (
+        <MovieList movies={searchedMovies} />
+    ) : (
+        Message("Movies not Found")
+    )
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <Animated.View style={[styles.searchBarContainer, { transform: [{ translateY: searchAnim }] }]}>
                 <SearchBar
                     onBlur={() => setSearchInputShown(false)}
@@ -83,7 +97,7 @@ function SearchScreen({ navigation }) {
                     inputRef={searchBar}
                 />
             </Animated.View>
-            {movieList}
+            {mainView}
         </View>
     )
 }
@@ -92,9 +106,19 @@ export default SearchScreen
 
 const styles = StyleSheet.create({
     searchBarContainer: {
+        flex: 1,
         position: "absolute",
         left: 0,
         right: 0,
         zIndex: 2
+    },
+    textContainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    text: {
+        fontSize: 24,
+        color: Colors.primary500
     }
 })

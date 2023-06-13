@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         marginHorizontal: 4,
-        marginVertical: 2,
-        overflow: "hidden"
+        marginVertical: 2
     },
     image: {
         width: 150,
@@ -45,11 +44,9 @@ const styles = StyleSheet.create({
         margin: 12,
         alignItems: "stretch",
         justifyContent: "center",
-        flex: 1,
-        flexGrow: 1
+        flex: 1
     },
     title: {
-        fontSize: 17,
         marginVertical: 2,
         backgroundColor: Colors.gray300,
         height: 20
@@ -62,7 +59,6 @@ const styles = StyleSheet.create({
     typeContainer: { flex: 1, justifyContent: "flex-end" },
     type: {
         backgroundColor: Colors.gray300,
-        textAlignVertical: "bottom",
         height: 20,
         width: 80
     }
