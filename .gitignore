@@ -16,8 +16,8 @@ web-build/
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
 
-#apikeys
-apikeys.js
+#evn variables
+.env
 
 #build
 eas.json

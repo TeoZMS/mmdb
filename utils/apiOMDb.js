@@ -1,7 +1,7 @@
 import axios from "axios"
-import { OMDB_KEY } from "./apikeys"
+import Constants from "expo-constants"
 
-const baseUrl = `http://www.omdbapi.com/?apikey=${OMDB_KEY}&`
+const baseUrl = `http://www.omdbapi.com/?apikey=${Constants.expoConfig.extra.omdbKey}&`
 
 export async function search(text) {
     const result = await axios.get(`${baseUrl}s=${text}`)
